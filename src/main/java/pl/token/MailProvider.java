@@ -1,5 +1,6 @@
 package pl.token;
 
+import lombok.AllArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -8,13 +9,10 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 @Service
-//@AllArgsConstructor
-public class MailService {
+@AllArgsConstructor
+public class MailProvider {
    private JavaMailSender javaMailSender;
 
-   public MailService(JavaMailSender javaMailSender) {
-      this.javaMailSender = javaMailSender;
-   }
 
    public void sendMail(String to,
                         String subject,

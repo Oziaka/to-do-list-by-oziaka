@@ -23,4 +23,9 @@ public class TaskResource {
    public Flux<Task> getTasks(Principal principal, @PathVariable Long taskListId) {
       return taskService.getTasks(principal, taskListId);
    }
+
+   @PostMapping("/edit/{taskId}")
+   public Mono<Task> updateTask(Principal principal, @PathVariable Long taskListId, @PathVariable Long taskId, @RequestBody Task task) {
+      return taskService.updateTask(principal,taskListId,taskId,task);
+   }
 }
