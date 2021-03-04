@@ -1,5 +1,6 @@
 package pl.user_task_list;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,4 +14,11 @@ public class UserTaskList {
    private Long id;
    private Long userId;
    private Long taskListId;
+
+   @Builder
+   public UserTaskList(Long id, Long userId, Long taskListId) {
+      this.id = id;
+      this.userId = userId;
+      this.taskListId = taskListId;
+   }
 }

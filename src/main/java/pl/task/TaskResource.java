@@ -1,26 +1,26 @@
 package pl.task;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-import static org.springframework.http.MediaType.APPLICATION_STREAM_JSON_VALUE;
+import java.security.Principal;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("task_list/{taskListId}/task")
+@RequestMapping(value = "task_list/{taskListId}/task", produces = MediaType.APPLICATION_NDJSON_VALUE)
 public class TaskResource {
    private TaskService taskService;
 
-   @PutMapping(path = "/add", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_STREAM_JSON_VALUE)
-   public Mono<Task> addTask(@RequestBody Task task, @PathVariable Long taskListId) {
-      return taskService.save(task,taskListId);
+   @PutMapping("/add")
+   public Mono<Task> addTask(Principal principal, @PathVariable Long taskListId, @RequestBody Task task) {
+      return taskService.addTask(principal, taskListId, task);
    }
 
-   @GetMapping(produces = APPLICATION_STREAM_JSON_VALUE)
-   public Flux<Task> getTasks() {
-      return taskService.getTasks();
+   @GetMapping
+   public Flux<Task> getTasks(Principal principal, @PathVariable Long taskListId) {
+      return taskService.getTasks(principal, taskListId);
    }
 }

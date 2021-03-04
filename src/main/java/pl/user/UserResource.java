@@ -2,12 +2,11 @@ package pl.user;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.security.Principal;
 
 @RestController
 @AllArgsConstructor
@@ -19,8 +18,13 @@ public class UserResource {
       return userService.addUser(user);
    }
 
-   @GetMapping(path = "/user", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
+   @GetMapping(path = "/users", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
    public Flux<User> getUsers() {
       return userService.getUsers();
+   }
+
+   @RequestMapping(path = "/user", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
+   public Mono<Principal> getUsers(Principal principal) {
+      return Mono.just(principal);
    }
 }

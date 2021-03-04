@@ -21,7 +21,8 @@ public class User implements UserDetails {
    private String email;
    private String name;
    private String password;
-   private String roleName;
+   private String userRole;
+   private Boolean isActive;
 
    @Builder
    public User(Long id, String email, String name, String password) {
@@ -33,10 +34,10 @@ public class User implements UserDetails {
 
    @Override
    public Collection<? extends GrantedAuthority> getAuthorities() {
-      if (roleName == null)
+      if (userRole == null)
          return Collections.emptyList();
       else
-         return Collections.singletonList(new SimpleGrantedAuthority(roleName));
+         return Collections.singletonList(new SimpleGrantedAuthority(userRole));
    }
 
    @Override
@@ -61,6 +62,6 @@ public class User implements UserDetails {
 
    @Override
    public boolean isEnabled() {
-      return true;
+      return isActive;
    }
 }

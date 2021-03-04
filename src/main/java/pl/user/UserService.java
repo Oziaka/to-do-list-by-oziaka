@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import static java.lang.Boolean.TRUE;
+
 @AllArgsConstructor
 @Service
 public class UserService implements ReactiveUserDetailsService {
@@ -17,7 +19,11 @@ public class UserService implements ReactiveUserDetailsService {
    private PasswordEncoder passwordEncoder;
 
    public Mono<User> addUser(User user) {
-      return userRepository.save(user.getEmail(), passwordEncoder.encode(user.getPassword()), user.getName(), DEFAULT_USER_ROLE);
+      user.setId(null);
+      user.setPassword(passwordEncoder.encode(user.getPassword()));
+      user.setUserRole(DEFAULT_USER_ROLE);
+      user.setIsActive(TRUE);
+      return userRepository.save(user);
    }
 
    public Flux<User> getUsers() {
