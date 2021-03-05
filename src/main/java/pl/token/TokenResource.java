@@ -15,7 +15,7 @@ public class TokenResource {
    private TokenService tokenService;
 
    @GetMapping("/{tokenValue}")
-   public Mono<User> activeAccount(@PathVariable String tokenValue){
+   public Mono<User> activeAccount(@PathVariable String tokenValue) {
       return tokenService.activeAccount(tokenValue);
    }
 

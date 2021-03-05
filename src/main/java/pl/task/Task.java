@@ -1,10 +1,8 @@
 package pl.task;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.Id;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
@@ -24,4 +22,16 @@ public class Task {
    private Boolean isUrgent;
    private Long taskListId;
 
+   @Builder
+   public Task(Long id, String name, String description, LocalDateTime term, LocalDateTime dateOfExecution, Boolean isDone, Boolean isImportant, Boolean isUrgent, Long taskListId) {
+      this.id = id;
+      this.name = name;
+      this.description = description;
+      this.term = term;
+      this.dateOfExecution = dateOfExecution;
+      this.isDone = isDone;
+      this.isImportant = isImportant;
+      this.isUrgent = isUrgent;
+      this.taskListId = taskListId;
+   }
 }
