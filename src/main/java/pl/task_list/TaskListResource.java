@@ -20,7 +20,7 @@ public class TaskListResource {
    }
 
    @GetMapping
-   public Flux<TaskList> getTasks(Principal principal) {
+   public Flux<TaskList> getListTasks(Principal principal) {
       return taskListService.getTasks(principal);
    }
 
@@ -28,4 +28,5 @@ public class TaskListResource {
    public Mono<TaskList> addUserToTaskList(Principal principal, @PathVariable Long taskListId, @PathVariable Long userId) {
       return taskListService.addUserToTaskList(principal, taskListId, userId);
    }
+
 }

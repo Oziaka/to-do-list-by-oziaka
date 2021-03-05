@@ -15,6 +15,7 @@ import javax.mail.MessagingException;
 import java.util.UUID;
 
 import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 
 @AllArgsConstructor
 @Service
@@ -30,7 +31,7 @@ public class UserService implements ReactiveUserDetailsService {
       user.setId(null);
       user.setPassword(passwordEncoder.encode(user.getPassword()));
       user.setUserRole(DEFAULT_USER_ROLE);
-      user.setIsActive(FALSE);
+      user.setIsActive(TRUE);
       return userRepository.save(user).flatMap(u -> {
          String tokenValue = UUID.randomUUID().toString();
          try {

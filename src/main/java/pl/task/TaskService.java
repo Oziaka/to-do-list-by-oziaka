@@ -31,7 +31,7 @@ public class TaskService {
 
    public Flux<Task> getTasks(Principal principal, Long taskListId) {
       return userProvider.getUser(principal).flatMapMany(u ->
-         userTaskListProvider.findUserTaskList(taskListId, u.getId()).flatMap(ut ->
+         userTaskListProvider.findUserTaskList(taskListId, u.getId()).flatMapMany(ut ->
             (ut.getId() != null) ?
                taskRepository.findAll(taskListId) :
                Mono.error(new ThereIsNoYourPropertyException())));
@@ -57,5 +57,9 @@ public class TaskService {
       oldTask.setDateOfExecution(updatedTask.getDateOfExecution() != null ? updatedTask.getDateOfExecution() : oldTask.getDateOfExecution());
       oldTask.setTerm(updatedTask.getTerm() != null ? updatedTask.getTerm() : oldTask.getTerm());
       return oldTask;
+   }
+
+   public Flux<Task> getAllTasks(Principal principal) {
+      return userProvider.getUser(principal).flatMapMany(u -> taskRepository.findAllUserTasks(u.getId()));
    }
 }

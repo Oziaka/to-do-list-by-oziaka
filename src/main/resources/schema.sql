@@ -19,10 +19,10 @@ CREATE TABLE task
     description       VARCHAR(255),
     term              date NOT NULL,
     data_od_execution date,
-    is_done           BIT NOT NULL,
-    is_important      BIT NOT NULL,
-    is_urgent         BIT NOT NULL,
-    task_list_id      INT NOT NULL
+    is_done           BIT  NOT NULL,
+    is_important      BIT  NOT NULL,
+    is_urgent         BIT  NOT NULL,
+    task_list_id      INT  NOT NULL
 );
 CREATE TABLE task_list
 (
@@ -40,6 +40,6 @@ CREATE TABLE token
 (
     id      INT IDENTITY(1,1) PRIMARY KEY,
     value   VARCHAR(255) NOT NULL,
-    user_id INT NOT NULL
+    user_id INT          NOT NULL
 )
 

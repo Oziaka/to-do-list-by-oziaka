@@ -10,22 +10,27 @@ import java.security.Principal;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping(value = "task_list/{taskListId}/task", produces = MediaType.APPLICATION_NDJSON_VALUE)
+@RequestMapping(value = "/task_list", produces = MediaType.APPLICATION_NDJSON_VALUE)
 public class TaskResource {
    private TaskService taskService;
 
-   @PutMapping("/add")
+   @PutMapping("/{taskListId}/task/add")
    public Mono<Task> addTask(Principal principal, @PathVariable Long taskListId, @RequestBody Task task) {
       return taskService.addTask(principal, taskListId, task);
    }
 
-   @GetMapping
-   public Flux<Task> getTasks(Principal principal, @PathVariable Long taskListId) {
+   @GetMapping("/{taskListId}/task")
+   public Flux<Task> getTasksOfTaskList(Principal principal, @PathVariable Long taskListId) {
       return taskService.getTasks(principal, taskListId);
    }
 
-   @PostMapping("/edit/{taskId}")
+   @PostMapping("/{taskListId}/task/edit/{taskId}")
    public Mono<Task> updateTask(Principal principal, @PathVariable Long taskListId, @PathVariable Long taskId, @RequestBody Task task) {
-      return taskService.updateTask(principal,taskListId,taskId,task);
+      return taskService.updateTask(principal, taskListId, taskId, task);
+   }
+
+   @GetMapping("/all_tasks")
+   public Flux<Task> getAllUseTasks(Principal principal){
+      return taskService.getAllTasks(principal);
    }
 }
