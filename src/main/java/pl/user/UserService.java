@@ -14,7 +14,6 @@ import reactor.core.publisher.Mono;
 import javax.mail.MessagingException;
 import java.util.UUID;
 
-import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
 @AllArgsConstructor
@@ -27,7 +26,8 @@ public class UserService implements ReactiveUserDetailsService {
    private TokenProvider tokenProvider;
    private MailProvider mailProvider;
 
-   public Mono<User> addUser(User user) {
+   public Mono<UserDto> addUser(UserDto userDto) {
+      User user = UserMapper.toEntity(userDto);
       user.setId(null);
       user.setPassword(passwordEncoder.encode(user.getPassword()));
       user.setUserRole(DEFAULT_USER_ROLE);
@@ -40,12 +40,12 @@ public class UserService implements ReactiveUserDetailsService {
          } catch (MessagingException e) {
             e.printStackTrace();
          }
-         return tokenProvider.save(Token.builder().userId(u.getId()).value(tokenValue).build()).thenReturn(u);
+         return tokenProvider.save(Token.builder().userId(u.getId()).value(tokenValue).build()).thenReturn(UserMapper.toDto(user));
       });
    }
 
-   public Flux<User> getUsers() {
-      return userRepository.getAll();
+   public Flux<UserDto> getUsers() {
+      return userRepository.getAll().map(UserMapper::toDto);
    }
 
    @Override

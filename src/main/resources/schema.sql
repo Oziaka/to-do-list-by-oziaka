@@ -17,12 +17,12 @@ CREATE TABLE task
     id                INT IDENTITY(1,1) PRIMARY KEY,
     name              VARCHAR(255),
     description       VARCHAR(255),
-    term              date NOT NULL,
-    data_od_execution date,
-    is_done           BIT  NOT NULL,
-    is_important      BIT  NOT NULL,
-    is_urgent         BIT  NOT NULL,
-    task_list_id      INT  NOT NULL
+    term              TIMESTAMP,
+    data_od_execution TIMESTAMP,
+    is_done           BIT NOT NULL,
+    is_important      BIT NOT NULL,
+    is_urgent         BIT NOT NULL,
+    task_list_id      INT NOT NULL
 );
 CREATE TABLE task_list
 (

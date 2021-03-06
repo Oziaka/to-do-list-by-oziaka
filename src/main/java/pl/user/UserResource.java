@@ -8,22 +8,25 @@ import reactor.core.publisher.Mono;
 
 import java.security.Principal;
 
+import static org.springframework.http.MediaType.APPLICATION_STREAM_JSON_VALUE;
+
 @RestController
 @AllArgsConstructor
+@RequestMapping(produces = APPLICATION_STREAM_JSON_VALUE)
 public class UserResource {
    private UserService userService;
 
-   @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_STREAM_JSON_VALUE, path = "/register")
-   public Mono<User> register(@RequestBody User user) {
+   @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, path = "/register")
+   public Mono<UserDto> register(@RequestBody UserDto user) {
       return userService.addUser(user);
    }
 
-   @GetMapping(path = "/users", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
-   public Flux<User> getUsers() {
+   @GetMapping(path = "/users")
+   public Flux<UserDto> getUsers() {
       return userService.getUsers();
    }
 
-   @RequestMapping(path = "/user", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
+   @RequestMapping(path = "/user")
    public Mono<Principal> getUsers(Principal principal) {
       return Mono.just(principal);
    }
