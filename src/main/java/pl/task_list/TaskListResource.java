@@ -10,7 +10,7 @@ import java.security.Principal;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping(path = "/task_list", produces = MediaType.APPLICATION_NDJSON_VALUE)
+@RequestMapping(path = "/task_list", produces = MediaType.APPLICATION_JSON_VALUE)
 public class TaskListResource {
    private TaskListService taskListService;
 

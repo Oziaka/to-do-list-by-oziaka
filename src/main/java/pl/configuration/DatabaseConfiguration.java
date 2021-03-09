@@ -1,4 +1,4 @@
-package pl;
+package pl.configuration;
 
 import io.r2dbc.spi.ConnectionFactory;
 import org.springframework.beans.factory.annotation.Qualifier;

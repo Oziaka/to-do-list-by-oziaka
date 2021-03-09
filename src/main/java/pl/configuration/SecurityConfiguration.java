@@ -1,4 +1,4 @@
-package pl;
+package pl.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;

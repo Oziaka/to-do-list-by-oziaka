@@ -14,12 +14,12 @@ public class UserResource {
    private UserService userService;
 
    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_STREAM_JSON_VALUE, path = "/register")
-   public Mono<User> register(@RequestBody User user) {
-      return userService.addUser(user);
+   public Mono<UserDto> register(@RequestBody UserDto userDto) {
+      return userService.addUser(userDto);
    }
 
    @GetMapping(path = "/users", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
-   public Flux<User> getUsers() {
+   public Flux<UserDto> getUsers() {
       return userService.getUsers();
    }
 

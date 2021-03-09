@@ -15,14 +15,14 @@ CREATE TABLE user
 CREATE TABLE task
 (
     id                INT IDENTITY(1,1) PRIMARY KEY,
-    name              VARCHAR(255),
+    name              VARCHAR(255) NOT NULL ,
     description       VARCHAR(255),
-    term              date NOT NULL,
-    data_od_execution date,
-    is_done           BIT  NOT NULL,
-    is_important      BIT  NOT NULL,
-    is_urgent         BIT  NOT NULL,
-    task_list_id      INT  NOT NULL
+    term              timestamp NOT NULL,
+    data_od_execution timestamp,
+    is_done           BIT       NOT NULL,
+    is_important      BIT       NOT NULL,
+    is_urgent         BIT       NOT NULL,
+    task_list_id      INT       NOT NULL
 );
 CREATE TABLE task_list
 (
