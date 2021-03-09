@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 
 @Repository
-public interface TaskRepository extends ReactiveCrudRepository<Task, Long> {
+public interface TaskRepository2 extends ReactiveCrudRepository<Task, Long> {
 
    @Query("SELECT * FROM task t WHERE t.task_list_id = :taskListId")
    Flux<Task> findAll(Long taskListId);

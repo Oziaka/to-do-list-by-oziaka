@@ -1,0 +1,1 @@
+DELETE t FROM task t INNER JOIN task_list tl ON tl.id = t.task_list_id) INNER JOIN user_task_list ut ON ut.task_list_id = t.task_list_id WHERE ut.user_id = :userId AND t.id = :taskId AND t.task_list_id = :taskListId

@@ -2,6 +2,7 @@ package pl.task_list;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import pl.exception.ThereIsNoYourPropertyException;
 import pl.user.UserProvider;
 import pl.user_task_list.UserTaskList;
 import pl.user_task_list.UserTaskListProvider;
@@ -35,7 +36,7 @@ public class TaskListService {
             if (ut.getId() != null)
                return userTaskListProvider.save(UserTaskList.builder().taskListId(ut.getId()).userId(userId).build());
             else
-               throw new RuntimeException("There is no your property");
+               return Mono.error(new ThereIsNoYourPropertyException());
          });
       }).then(taskListRepository.findById(taskListId));
    }

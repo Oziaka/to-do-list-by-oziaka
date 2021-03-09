@@ -10,7 +10,7 @@ import java.security.Principal;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping(value = "/task_list", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
+@RequestMapping(value = "/task_list", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
 public class TaskResource {
    private TaskService taskService;
 
@@ -19,7 +19,7 @@ public class TaskResource {
       return taskService.addTask(principal, taskListId, task);
    }
 
-   @GetMapping("/{taskListId}/task")
+   @GetMapping(value = "/{taskListId}/task", consumes = MediaType.ALL_VALUE)
    public Flux<Task> getTasksOfTaskList(Principal principal, @PathVariable Long taskListId) {
       return taskService.getTasks(principal, taskListId);
    }
@@ -29,8 +29,13 @@ public class TaskResource {
       return taskService.updateTask(principal, taskListId, taskId, task);
    }
 
-   @GetMapping("/all_tasks")
-   public Flux<Task> getAllUseTasks(Principal principal){
+   @GetMapping(value = "/all_tasks", consumes = MediaType.ALL_VALUE)
+   public Flux<Task> getAllUseTasks(Principal principal) {
       return taskService.getAllTasks(principal);
+   }
+
+   @DeleteMapping(value = "/{taskListId}/task/remove/{taskId}", consumes = MediaType.ALL_VALUE)
+   public void removeTask(Principal principal, @PathVariable Long taskListId, @PathVariable Long taskId) {
+      taskService.removeTask(principal, taskListId, taskId);
    }
 }

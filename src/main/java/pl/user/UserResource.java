@@ -13,6 +13,7 @@ import static org.springframework.http.MediaType.APPLICATION_STREAM_JSON_VALUE;
 @RestController
 @AllArgsConstructor
 @RequestMapping(produces = APPLICATION_STREAM_JSON_VALUE)
+@CrossOrigin("${cors.origin.allowed}")
 public class UserResource {
    private UserService userService;
 

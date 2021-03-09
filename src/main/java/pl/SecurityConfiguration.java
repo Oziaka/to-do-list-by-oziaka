@@ -23,6 +23,9 @@ public class SecurityConfiguration {
          .httpBasic()
          .and()
          .csrf().disable()
+         .cors().disable()
+         .headers().frameOptions().disable()
+         .and()
          .build();
    }
 

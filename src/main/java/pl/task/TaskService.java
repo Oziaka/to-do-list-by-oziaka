@@ -15,25 +15,32 @@ import static java.lang.Boolean.FALSE;
 @Service
 @AllArgsConstructor
 public class TaskService {
-   private TaskRepository taskRepository;
+   private TaskRepository2 taskRepository2;
    private UserProvider userProvider;
    private UserTaskListProvider userTaskListProvider;
 
    public Mono<Task> addTask(Principal principal, Long taskListId, Task task) {
-      task.setTaskListId(taskListId);
-      task.setIsDone(FALSE);
+      preformTask(taskListId, task);
       return userProvider.getUser(principal).flatMap(u ->
          userTaskListProvider.findUserTaskList(taskListId, u.getId()).flatMap(ut ->
             (ut.getId() != null) ?
-               taskRepository.save(task) :
+               taskRepository2.save(task) :
                Mono.error(new ThereIsNoYourPropertyException())));
+   }
+
+   private void preformTask(Long taskListId, Task task) {
+      task.setIsImportant(task.getIsImportant() == null ? false : task.getIsImportant());
+      task.setIsUrgent(task.getIsUrgent() == null ? false : task.getIsUrgent());
+      task.setIsDone(false);
+      task.setTaskListId(taskListId);
+      task.setIsDone(FALSE);
    }
 
    public Flux<Task> getTasks(Principal principal, Long taskListId) {
       return userProvider.getUser(principal).flatMapMany(u ->
          userTaskListProvider.findUserTaskList(taskListId, u.getId()).flatMapMany(ut ->
             (ut.getId() != null) ?
-               taskRepository.findAll(taskListId) :
+               taskRepository2.findAll(taskListId) :
                Mono.error(new ThereIsNoYourPropertyException())));
    }
 
@@ -41,9 +48,9 @@ public class TaskService {
       return userProvider.getUser(principal).flatMap(u ->
          userTaskListProvider.findUserTaskList(taskListId, u.getId()).flatMap(ut ->
             (ut.getId() != null) ?
-               taskRepository.findById(taskId).flatMap(t ->
+               taskRepository2.findById(taskId).flatMap(t ->
                   (t.getTaskListId().equals(taskListId)) ?
-                     taskRepository.save(updateNoNullFields(t, task)) :
+                     taskRepository2.save(updateNoNullFields(t, task)) :
                      Mono.error(new RuntimeException("Bad task or task list"))) :
                Mono.error(new ThereIsNoYourPropertyException())));
    }
@@ -60,6 +67,10 @@ public class TaskService {
    }
 
    public Flux<Task> getAllTasks(Principal principal) {
-      return userProvider.getUser(principal).flatMapMany(u -> taskRepository.findAllUserTasks(u.getId()));
+      return userProvider.getUser(principal).flatMapMany(u -> taskRepository2.findAllUserTasks(u.getId()));
+   }
+
+   public Mono<Void> removeTask(Principal principal, Long taskListId, Long taskId) {
+      return null;
    }
 }
